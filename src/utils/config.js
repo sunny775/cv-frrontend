@@ -1,6 +1,10 @@
 /* eslint-disable operator-linebreak */
-const serverBaseUrl =
+export const serverUrl =
   process.env.NODE_ENV === "production"
-    ? "https://jaconnect.ew.r.appspot.com/"
-    : "http://localhost:3000/graphql";
-export default serverBaseUrl;
+    ? "https://campusverve.ey.r.appspot.com"
+    : "http://localhost:4000";
+
+export const wsUrl =
+  process.env.NODE_ENV === "production"
+    ? "wss://campusverve.ey.r.appspot.com"
+    : "ws://localhost:4000";

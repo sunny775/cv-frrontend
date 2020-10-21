@@ -40,7 +40,6 @@ const OffineBadge = withStyles((theme) => ({
   },
 }))(Badge);
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",

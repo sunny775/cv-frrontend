@@ -1,28 +1,40 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useRecoilState } from "recoil";
+import React, { useState } from "react";
+import { useRecoilValue } from "recoil";
+import { makeStyles } from "@material-ui/core/styles";
+import Twemoji from 'react-twemoji';
 import Login from "./auth";
 import LinearBuffer from "./LinearBuffer";
 import { userState } from "../recoil/atoms/users";
+import ChatBox from './chat';
+import NavBar from './NavBar';
+import useSocket from '../utils/useSocket';
+import MobileMoreDrawer from './drawers/mobileMore';
 
-const Layout = ({ children, ...rest }) => {
-  const [user, setUser] = useRecoilState(userState);
-  const [loading, setLoading] = useState(true);
-  console.log(user);
-  useEffect(() => {
-    axios
-      .get("/auth/user")
-      .then((res) => {
-        setUser(res.data);
-        setLoading(false);
-      })
-      .catch(() => {
-        setLoading(false);
-        console.log("You are oofline");
-      });
-  }, []);
+const useStyles = makeStyles((theme) => ({
+  root: {
+    position: "relative",
+    marginTop: theme.spacing(8),
+  }
+}));
 
-  // return loading ? <LinearBuffer /> : user ? <div>{children}</div> : <Login />;
-  return <h1 style={{margin: "30vmin 0", background: 'orange', padding: '4px 20px'}}>page under construction</h1>
+const Layout = ({ children }) => {
+  const classes = useStyles();
+  const user = useRecoilValue(userState);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const { loading, socket } = useSocket();
+
+  const L = () => (
+    <Twemoji>
+      <div className={classes.root}>
+        <MobileMoreDrawer drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
+        <NavBar socket={socket} setDrawerOpen={setDrawerOpen} />
+        <ChatBox socket={socket} />
+       {children}
+     </div>;
+    </Twemoji>
+  );
+
+  // return <div>{children}</div>;
+  return loading ? <LinearBuffer /> : user ? <L /> : <Login />;
 };
 export default Layout;

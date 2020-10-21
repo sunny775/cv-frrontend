@@ -14,6 +14,7 @@ import MuiAlert from "@material-ui/lab/Alert";
 import initFirebase from "../../utils/initFirebase";
 import SigninForm from "./SigninForm";
 import SignupForm from "./SignupForm";
+import { serverUrl } from '../../utils/config';
 
 initFirebase();
 
@@ -22,8 +23,7 @@ function getCookie(name) {
 }
 
 const postIdTokenToSessionLogin = (url, idToken, csrfToken) =>
-  axios.post(url, { idToken, csrfToken });
-  // { headers: { Authorization: `Bearer ${idToken}` } }
+  axios.post(url, { idToken, csrfToken }, { withCredentials: true });
 
 const handleSignedInUser = () =>
   firebase
@@ -33,15 +33,19 @@ const handleSignedInUser = () =>
       const csrfToken = getCookie("csrfToken");
       console.log("csrf-t:", csrfToken);
       return postIdTokenToSessionLogin(
-        "/auth/sessionLogin",
+        `${serverUrl}/auth/sessionLogin`,
         idToken,
         csrfToken
       ).then(
         () => {
+          // Redirect to homepage on success.
           console.log("signin successful");
+          // window.location.assign("/");
         },
+        // eslint-disable-next-line no-unused-vars
         (error) => {
           console.log(error);
+          // window.location.reload();
         }
       );
     });
@@ -130,7 +134,11 @@ export default function Auth() {
               handleSignedInUser={handleSignedInUser}
             />
           ) : (
-            <SignupForm setTab={setTab} registerSuccess={registerSuccess} />
+            <SignupForm
+              setTab={setTab}
+              handleSignedInUser={handleSignedInUser}
+              registerSuccess={registerSuccess}
+            />
           )}
         </div>
       </Grid>

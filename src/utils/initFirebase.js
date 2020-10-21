@@ -11,10 +11,14 @@ import "firebase/auth";
 export default function initFirebase() {
   if (!firebase.apps.length) {
     firebase.initializeApp({
-      apiKey: process.env.FIREBASE_API_KEY,
-      authDomain: "jaconnect.firebaseapp.com",
-      databaseURL: "https://jaconnect.firebaseio.com",
-      projectId: "jaconnect",
+      apiKey: "AIzaSyD2eYZpy4Sl2pIE1Ha5VvXQugCA3gjuYoA",
+      authDomain: "campusverve.firebaseapp.com",
+      databaseURL: "https://campusverve.firebaseio.com",
+      projectId: "campusverve",
+      storageBucket: "campusverve.appspot.com",
+      messagingSenderId: "35267866420",
+      appId: "1:35267866420:web:4badcf824cdfb112d77f61",
+      measurementId: "G-BBWDFS6DP8"
     });
     // firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
   }

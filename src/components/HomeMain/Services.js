@@ -5,6 +5,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 import ChevronRight from "@material-ui/icons/ChevronRight";
 import Grid from "@material-ui/core/Grid";
+import Link from 'next/link';
 
 const useStyles = makeStyles((theme) => ({
   sideBar: {
@@ -19,16 +20,19 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
   },
   serviceItem: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    padding: theme.spacing(2),
     "&:nth-child(1)": {
       borderRight: "1px solid #eee",
     },
     "&:nth-child(2)": {
       borderRight: "1px solid #eee",
     },
+  },
+  itemLink: {
+    display: "flex",
+    flexDirection: "column",
+    width: '100%',
+    justifyContent: "space-between",
+    padding: theme.spacing(2),
     [theme.breakpoints.up("lg")]: {
       fontSize: "1.5em",
     },
@@ -56,14 +60,18 @@ export default function Services() {
     <div>
       <Paper className={classes.servicesContainer}>
         <Grid container component={MenuList} className={classes.menuList}>
-          <Grid
+            <Grid
             item
             xs={4}
             component={MenuItem}
             className={classes.serviceItem}
           >
-            <div>Campus</div>
-            <ChevronRight className={classes.icon} />
+            <Link href='/campus'>
+            <a className={classes.itemLink}>
+              <div>Campus</div>
+              <ChevronRight className={classes.icon} />
+            </a>
+          </Link>
           </Grid>
           <Grid
             item
@@ -71,8 +79,12 @@ export default function Services() {
             component={MenuItem}
             className={classes.serviceItem}
           >
-            <div>Classroom</div>
+            <Link href='study-area'>
+            <a className={classes.itemLink}>
+              <div>Classroom</div>
             <ChevronRight className={classes.icon} />
+            </a>
+            </Link>
           </Grid>
           <Grid
             item
@@ -80,8 +92,12 @@ export default function Services() {
             component={MenuItem}
             className={classes.serviceItem}
           >
-            <div>Top-up</div>
-            <ChevronRight className={classes.icon} />
+            <Link href='/services'>
+              <a className={classes.itemLink}>
+                <div>Top-up</div>
+                <ChevronRight className={classes.icon} />
+              </a>
+            </Link>
           </Grid>
         </Grid>
       </Paper>

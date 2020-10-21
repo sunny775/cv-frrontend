@@ -11,6 +11,7 @@ import Badge from "@material-ui/core/Badge";
 import AddIcon from "@material-ui/icons/Add";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
+import Link from 'next/link';
 import Avatar from "./AvatarLarge";
 
 const useStyles = makeStyles((theme) => ({
@@ -76,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SideBar() {
+export default function SideBar({user}) {
   const classes = useStyles();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
@@ -164,9 +165,9 @@ export default function SideBar() {
               aria-label="vertical contained primary button group"
               variant="text"
             >
-              <Button>General</Button>
-              <Button>Announcement</Button>
-              <Button>Unilag</Button>
+              <Button><Link href='/general'><a>General</a></Link></Button>
+              <Button><Link href='/announcement'><a>Announcement</a></Link></Button>
+              <Button><Link href='/campus'><a>{user && user.campus && user.campus.alias}</a></Link></Button>
             </ButtonGroup>
           </MenuList>
         </Paper>

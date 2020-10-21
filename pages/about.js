@@ -18,7 +18,7 @@ export default function About() {
 
   const logout = async () => {
     try {
-      const res = await axios.get("/auth/logout");
+      const res = await axios.get("/api/logout");
       setUser(null);
       console.log("logout successful:", res);
       return router.push("/");
@@ -50,28 +50,3 @@ export default function About() {
     </Container>
   );
 }
-
-/* export async function getServerSideProps(context) {
-  try {
-    console.log(context.query);
-    const { param, req, res, query } = context;
-    console.log(cookies(context));
-    // req.owner = 'sonnie'
-    // res.cookie('name', 'tobi');
-    console.log("fromServer:", req.fromServer);
-    const document = admin.firestore().doc("posts/from-get-static-props");
-    await document.set({
-      title: "getStatciProps rocks",
-      body: "Testing ths piece of shit",
-    });
-    console.log("document saved");
-    return {
-      props: { result: "document saved" },
-    };
-  } catch (error) {
-    console.log("errresponse:", "error");
-    return {
-      props: { result: "error" },
-    };
-  }
-} */

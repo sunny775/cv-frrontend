@@ -20,11 +20,13 @@ import * as yup from "yup";
 import axios from "axios";
 import Copyright from "./Copyright";
 import schools from "../../utils/higherInstitutions";
+import { serverUrl } from '../../utils/config';
 
 const schema = yup.object({
   firstname: yup.string().required("Firstname is required"),
   lastname: yup.string().required("Lastname is required"),
   email: yup.string().required("Email is required"),
+  username: yup.string().required("Username is required"),
   password: yup.string().required("Password is required"),
 });
 
@@ -93,11 +95,8 @@ const SignupForm = ({ setTab, registerSuccess }) => {
             setSuccess(false);
             setLoading(true);
           }
-          const userInfo = await axios.post("/auth/register", value);
+          const userInfo = await axios.post(`${serverUrl}/auth/register`, value);
           console.log("user created:", userInfo);
-          await axios.post("/auth/email-verification", {
-            email: value.email,
-          });
           setSuccess(true);
           setLoading(false);
           registerSuccess();
@@ -112,6 +111,7 @@ const SignupForm = ({ setTab, registerSuccess }) => {
         lastname: "",
         email: "",
         password: "",
+        username: "",
         school: "",
       }}
     >
@@ -171,6 +171,22 @@ const SignupForm = ({ setTab, registerSuccess }) => {
                   touched.email && !!errors.email ? errors.email : null
                 }
                 error={touched.email && !!errors.email}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                label="Username"
+                type="text"
+                id="username"
+                autoComplete="username"
+                {...getFieldProps("username")}
+                helperText={
+                  touched.username && !!errors.username ? errors.username : null
+                }
+                error={touched.username && !!errors.username}
               />
             </Grid>
             <Grid item xs={12}>

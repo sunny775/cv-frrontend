@@ -15,7 +15,9 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import Fab from "@material-ui/core/Fab";
+import Link from 'next/link';
 import HomeIcon from "@material-ui/icons/Home";
+import { useRouter } from 'next/router';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -115,23 +117,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PrimarySearchAppBar({window}) {
+export default function PrimaryAppBar({ window, setDrawerOpen }) {
   const classes = useStyles();
   const trigger = useScrollTrigger({ target: window ? window() : undefined });
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [menuItems, setItems] = React.useState(null);
+  const router = useRouter();
+
+  const { pathname } = router;
 
   const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
 
   const handleMenuClose = () => {
     setAnchorEl(null);
-    handleMobileMenuClose();
   };
 
   const handleNotificationsOpen = (event) => {
@@ -157,8 +155,8 @@ export default function PrimarySearchAppBar({window}) {
     ]);
   };
 
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
+  const handleMobileMenuOpen = () => {
+    setDrawerOpen(true);
   };
 
   const menuId = "primary-search-account-menu";
@@ -177,52 +175,13 @@ export default function PrimarySearchAppBar({window}) {
     </Menu>
   );
 
-  const mobileMenuId = "primary-search-account-menu-mobile";
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem onClick={handleMessagesOpen}>
-        <IconButton
-          aria-label="latest messages"
-          aria-controls="messages"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <Badge badgeContent={4} color="secondary">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem onClick={handleNotificationsOpen}>
-        <IconButton
-          edge="end"
-          aria-label="latest notifications"
-          aria-controls="notifications"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <Badge badgeContent={2} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-    </Menu>
-  );
-
   return (
     <div className={classes.grow}>
       <AppBar position="fixed" color="transparent" elevation={trigger ? 3 : 0}>
         <Toolbar className={classes.toolBar}>
-          <Fab
+          <Link href='/'>
+          <a>
+            <Fab
             variant="extended"
             size="medium"
             color="primary"
@@ -232,7 +191,8 @@ export default function PrimarySearchAppBar({window}) {
             <HomeIcon className={classes.title} />
             CampusVerse
           </Fab>
-          {renderMobileMenu}
+            </a>
+            </Link>
           <IconButton
             edge="start"
             color="inherit"
@@ -284,17 +244,15 @@ export default function PrimarySearchAppBar({window}) {
               </Badge>
             </IconButton>
           </div>
-          <div className={classes.sectionMobile}>
+          {pathname === '/' ? <div className={classes.sectionMobile}>
             <IconButton
               aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
               onClick={handleMobileMenuOpen}
               color="inherit"
             >
               <MoreIcon />
             </IconButton>
-          </div>
+          </div> : null}
         </Toolbar>
       </AppBar>
       {renderMenu}

@@ -4,15 +4,14 @@ import Head from "next/head";
 import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { RecoilRoot } from "recoil";
-import { ApolloProvider } from "@apollo/client";
-import { useApollo } from "../lib/apolloClient";
-import theme from "../lib/theme";
+import "../styles/globals.css";
+import theme from "../src/components/theme";
 import Layout from "../src/components/Layout";
 
-export default function App({ Component, pageProps }) {
-  const apolloClient = useApollo(pageProps.initialApolloState);
+export default function MyApp(props) {
+  const { Component, pageProps } = props;
+
   React.useEffect(() => {
-    // Remove the server-side injected CSS.
     const jssStyles = document.querySelector("#jss-server-side");
     if (jssStyles) {
       jssStyles.parentElement.removeChild(jssStyles);
@@ -22,28 +21,25 @@ export default function App({ Component, pageProps }) {
   return (
     <React.Fragment>
       <Head>
-        <title>My page</title>
+        <title>campusverve</title>
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
       </Head>
       <ThemeProvider theme={theme}>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
         <RecoilRoot>
-          <ApolloProvider client={apolloClient}>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          </ApolloProvider>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
         </RecoilRoot>
       </ThemeProvider>
     </React.Fragment>
   );
 }
 
-App.propTypes = {
+MyApp.propTypes = {
   Component: PropTypes.elementType.isRequired,
   pageProps: PropTypes.object.isRequired,
 };
