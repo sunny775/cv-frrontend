@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import { useRecoilValue } from "recoil";
+import { CircularProgress } from "@material-ui/core";
 import LeftSideBar from "../src/components/profile/forUser/LeftSideBar";
 import RightSideBar from "../src/components/profile/forUser/RightSideBar";
 import Services from "../src/components/HomeMain/Services";
@@ -30,18 +31,30 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Auth() {
   const classes = useStyles();
-  const user = useRecoilValue(userState);
+  const { data, loading } = useRecoilValue(userState);
 
   return (
     <>
       <div className={classes.root}>
         <Grid container component="main" className={classes.root}>
-          <LeftSideBar user={user} />
+          {data ? (
+            <LeftSideBar user={data} />
+          ) : loading ? (
+            <CircularProgress />
+          ) : (
+            null
+          )}
           <Grid item xs={12} md={6}>
             <Services />
             <Posts />
           </Grid>
-          <RightSideBar user={user} />
+         {data ? (
+            <RightSideBar user={data} />
+         ) : loading ? (
+            <CircularProgress />
+         ) : (
+           null
+         )}
         </Grid>
       </div>
     </>

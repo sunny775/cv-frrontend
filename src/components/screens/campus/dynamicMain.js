@@ -8,14 +8,10 @@ import Button from "@material-ui/core/Button";
 import Fab from '@material-ui/core/Fab';
 import MenuIcon from '@material-ui/icons/Menu';
 import Link from 'next/link';
-import { useRecoilValue } from "recoil";
-// import CircularProgress from '@material-ui/core/CircularProgress';
-import NewPost from '../../src/components/NewPost';
-import About from '../../src/components/groups/About';
-import Media from '../../src/components/groups/Media';
-import CampusListDrawer from '../../src/components/groups/CampusListDrawer';
-// import { usePageSimple } from '../../src/hooks/pageData';
-import { userState } from "../../src/recoil/atoms/users";
+import CircularProgress from '@material-ui/core/CircularProgress';
+import NewPost from '../../NewPost';
+import About from '../../groups/About';
+import Media from '../../groups/Media';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
       width: "100%",
       height: '40vh',
     },
-    backgroundImage: "url(images/profile-bg1.jpg)",
+    backgroundImage: "url(/images/profile-bg1.jpg)",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPosition: "center",
@@ -86,24 +82,15 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function CampusPage() {
+function Main({ handleDrawerToggle, data, loading }) {
   const classes = useStyles();
-  const [drawerOpen, setDrawerOpen] = React.useState(false);
   const [tab, setTab] = React.useState('main');
-  const { data } = useRecoilValue(userState);
-
-  const handleDrawerToggle = () => {
-    setDrawerOpen((state) => !state);
-  };
-
   return (
-    <div className={classes.root}>
-      <CampusListDrawer drawerOpen={drawerOpen} handleDrawerToggle={handleDrawerToggle} />
       <main className={classes.content}>
         <Paper className={classes.mainArea} elevation={0}>
         <div>
             <div className={classes.coverPhoto}>
-            <div className={classes.groupName}>{data.school}</div>
+                <div className={classes.groupName}>{data && data.campus.name}</div>
                 <Hidden mdUp implementation="css">
                 <Fab color="secondary" aria-label="Campus Groups" className={classes.campusesBtn} onClick={handleDrawerToggle}>
                    <MenuIcon />
@@ -145,9 +132,12 @@ function CampusPage() {
             <Grid item xs={false} md={4} className={classes.aside}>
                 <div className={classes.asideContent}>
                     {data && (
-                      <About name={data.school}>
-                       {data.Campus.description}
+                      <About name={data.campus.name}>
+                       {data.campus.description}
                       </About>
+                    )}
+                    {loading && (
+                      <Paper className={classes.loading}><CircularProgress /></Paper>
                     )}
                     <Media tab={tab} />
                 </div>
@@ -155,16 +145,15 @@ function CampusPage() {
         </Grid>
         </div>
 
-        {tab === 'about' && (
-          <About name={data.school}>
-            {data.Campus.description}
+        {tab === 'about' && data && (
+          <About name={data.campus.name}>
+            {data.campus.description}
           </About>
         )}
         </Paper>
         <div className={classes.toolbar} />
       </main>
-    </div>
   );
 }
 
-export default CampusPage;
+export default Main;

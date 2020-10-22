@@ -9,6 +9,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 import Badge from "@material-ui/core/Badge";
 import AddIcon from "@material-ui/icons/Add";
+import PropTypes from 'prop-types';
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
 import Link from 'next/link';
@@ -89,11 +90,11 @@ export default function SideBar({user}) {
         <Avatar />
       </div>
       <Paper className={classes.userInfo}>
-        <Typography variant="h5" className={classes.name}>
-          Sonnie Cletus
+          <Typography variant="h5" className={classes.name}>
+          {`${user.firstname} ${user.lastname}`}
         </Typography>
         <Typography className={classes.school}>
-          <small>Lagos State University</small>
+          <small>{user.school}</small>
         </Typography>
       </Paper>
       <div>
@@ -167,7 +168,7 @@ export default function SideBar({user}) {
             >
               <Button><Link href='/general'><a>General</a></Link></Button>
               <Button><Link href='/announcement'><a>Announcement</a></Link></Button>
-              <Button><Link href='/campus'><a>{user && user.campus && user.campus.alias}</a></Link></Button>
+              <Button><Link href='/campus'><a>{user.Campus.alias}</a></Link></Button>
             </ButtonGroup>
           </MenuList>
         </Paper>
@@ -175,3 +176,7 @@ export default function SideBar({user}) {
     </Grid>
   );
 }
+
+SideBar.propTypes = {
+  user: PropTypes.object.isRequired
+};

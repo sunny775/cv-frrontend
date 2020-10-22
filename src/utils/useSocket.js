@@ -10,7 +10,6 @@ function useSocket() {
   const [socket, setSocket] = useState(null);
   const setUser = useSetRecoilState(userState);
   const setOnlineUsers = useSetRecoilState(onlineUsers);
-  const [loading, setLoading] = useState(true);
 
   const { USER_CONNECTED, USERLIST, USER_DISCONNECTED,
     LOGOUT, COMMUNITY_CHAT, MESSAGE_RECIEVED, MESSAGE_SENT,
@@ -18,10 +17,9 @@ function useSocket() {
 
   useEffect(() => {
     axios
-      .get(`${serverUrl}/userData`, { withCredentials: true })
+      .get(`${serverUrl}/auth`, { withCredentials: true })
       .then((res) => {
-        setUser(res.data);
-        setLoading(false);
+        setUser({ loading: false, data: res.data });
         const socket = io(wsUrl);
         setSocket(socket);
         console.log(res.data);
@@ -30,6 +28,7 @@ function useSocket() {
           socket.emit(USER_CONNECTED, { name: username, chats: Chats });
 
           socket.on(USERLIST, (list) => {
+            console.log(list);
             setOnlineUsers((users) => ({ ...users, ...list }));
           });
 
@@ -51,13 +50,15 @@ function useSocket() {
         });
       })
       .catch(() => {
-        setLoading(false);
+        setUser((user) => {
+          const newUser = { data: user.data, loading: false };
+          return newUser;
+        });
         console.log("You are offline");
       });
   }, []);
 
   return {
-    loading,
     socket
   };
 }

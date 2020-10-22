@@ -14,13 +14,14 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { green } from "@material-ui/core/colors";
 import { Formik } from "formik";
 import * as yup from "yup";
-import firebase from "firebase/app";
 import { useSetRecoilState } from "recoil";
+import axios from "axios";
+import { serverUrl } from '../../utils/config';
 import Copyright from "./Copyright";
 import { userState } from "../../recoil/atoms/users";
 
 const schema = yup.object({
-  email: yup.string().required("Email is required"),
+  username: yup.string().required("Username is required"),
   password: yup.string().required("Password is required"),
 });
 
@@ -52,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SigninForm = ({ setTab, handleSignedInUser }) => {
+const SigninForm = ({ setTab }) => {
   const classes = useStyles();
   const [loginError, setLoginError] = useState(null);
   const [loading, setLoading] = React.useState(false);
@@ -72,22 +73,19 @@ const SigninForm = ({ setTab, handleSignedInUser }) => {
             setSuccess(false);
             setLoading(true);
           }
-          const user = await firebase
-            .auth()
-            .signInWithEmailAndPassword(value.email, value.password);
-          const { uid, email, refreshToken, name } = user.user;
-          await handleSignedInUser(user);
+          const { data } = await axios.post(`${serverUrl}/auth/login`, value, { withCredentials: true });
           setSuccess(true);
           setLoading(false);
-          setUser({ authenticated: true, email, uid, refreshToken, name });
+          console.log(data);
+          setUser({ data, loading: false });
         } catch (error) {
           setLoading(false);
-          setLoginError(error.message);
-          console.log(error);
+          setLoginError(error.response.data);
+          console.log(error.response);
         }
       }}
       initialValues={{
-        email: "",
+        username: "",
         password: "",
       }}
     >
@@ -98,13 +96,12 @@ const SigninForm = ({ setTab, handleSignedInUser }) => {
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            autoComplete="email"
-            helperText={touched.email && !!errors.email ? errors.email : null}
-            error={touched.email && !!errors.email}
+            id="username"
+            label="Username"
+            helperText={touched.username && !!errors.username ? errors.username : null}
+            error={touched.username && !!errors.username}
             autoFocus
-            {...getFieldProps("email")}
+            {...getFieldProps("username")}
           />
           <TextField
             variant="outlined"
@@ -114,7 +111,6 @@ const SigninForm = ({ setTab, handleSignedInUser }) => {
             label="Password"
             type="password"
             id="password"
-            autoComplete="current-password"
             {...getFieldProps("password")}
             helperText={
               touched.password && !!errors.password ? errors.password : null
@@ -170,6 +166,5 @@ const SigninForm = ({ setTab, handleSignedInUser }) => {
 
 SigninForm.propTypes = {
   setTab: PropTypes.func.isRequired,
-  handleSignedInUser: PropTypes.func.isRequired,
 };
 export default SigninForm;

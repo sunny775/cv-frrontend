@@ -43,6 +43,7 @@ export default function CampusListDrawer({ window, handleDrawerToggle, drawerOpe
   const classes = useStyles();
   const router = useRouter();
   const { data, loading } = useCampusList();
+  console.log(data);
 
   const handleClick = (page) => router.push(`/campus/${page}`);
   const drawer = (

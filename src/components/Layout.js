@@ -19,9 +19,9 @@ const useStyles = makeStyles((theme) => ({
 
 const Layout = ({ children }) => {
   const classes = useStyles();
-  const user = useRecoilValue(userState);
+  const { data, loading } = useRecoilValue(userState);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const { loading, socket } = useSocket();
+  const { socket } = useSocket();
 
   const L = () => (
     <Twemoji>
@@ -35,6 +35,6 @@ const Layout = ({ children }) => {
   );
 
   // return <div>{children}</div>;
-  return loading ? <LinearBuffer /> : user ? <L /> : <Login />;
+  return loading ? <LinearBuffer /> : data ? <L /> : <Login />;
 };
 export default Layout;

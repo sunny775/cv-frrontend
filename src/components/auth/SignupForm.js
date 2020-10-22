@@ -95,15 +95,15 @@ const SignupForm = ({ setTab, registerSuccess }) => {
             setSuccess(false);
             setLoading(true);
           }
-          const userInfo = await axios.post(`${serverUrl}/auth/register`, value);
+          const userInfo = await axios.post(`${serverUrl}/auth/register`, value, { withCredentials: true });
           console.log("user created:", userInfo);
           setSuccess(true);
           setLoading(false);
           registerSuccess();
         } catch (error) {
           setLoading(false);
-          console.log(JSON.stringify(error));
-          setSignupError(error.message);
+          console.log(error.response);
+          setSignupError(error.response.data);
         }
       }}
       initialValues={{
@@ -163,6 +163,7 @@ const SignupForm = ({ setTab, registerSuccess }) => {
                 variant="outlined"
                 required
                 fullWidth
+                type="email"
                 id="email"
                 label="Email Address"
                 autoComplete="email"
@@ -181,7 +182,6 @@ const SignupForm = ({ setTab, registerSuccess }) => {
                 label="Username"
                 type="text"
                 id="username"
-                autoComplete="username"
                 {...getFieldProps("username")}
                 helperText={
                   touched.username && !!errors.username ? errors.username : null
@@ -197,7 +197,6 @@ const SignupForm = ({ setTab, registerSuccess }) => {
                 label="Password"
                 type="password"
                 id="password"
-                autoComplete="current-password"
                 {...getFieldProps("password")}
                 helperText={
                   touched.password && !!errors.password ? errors.password : null
@@ -230,7 +229,7 @@ const SignupForm = ({ setTab, registerSuccess }) => {
             {signupError && (
               <Grid item xs={12}>
                 <Typography variant="body2" color="error" align="left">
-                  {signupError}
+                  {signupError.username || signupError.email || null}
                 </Typography>{" "}
               </Grid>
             )}

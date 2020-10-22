@@ -4,8 +4,8 @@ import { serverUrl } from '../utils/config';
 
 const fetcher = (url) => axios.get(url, { withCredentials: true }).then((res) => res.data);
 
-export function useCampusList(id) {
-  const { data, error } = useSWR(`${serverUrl}/pageData/allCampus`, fetcher);
+export function useCampusList() {
+  const { data, error } = useSWR(`${serverUrl}/campusData/allCampus`, fetcher);
   return {
     data,
     loading: !error && !data,
@@ -13,8 +13,8 @@ export function useCampusList(id) {
   };
 }
 
-export function usePageSimple(pagePath) {
-  const { data, error } = useSWR(`${serverUrl}/pageData/page-simple?pagePath=${pagePath}`, fetcher);
+export function usePage(pagePath) {
+  const { error, data } = useSWR(`${serverUrl}/pageData?pagePath=${pagePath}`, fetcher);
   return {
     pageData: data,
     loading: !error && !data,
@@ -22,10 +22,10 @@ export function usePageSimple(pagePath) {
   };
 }
 
-export function useCampusSimple(pagePath) {
-  const { data, error } = useSWR(`${serverUrl}/pageData/campus-simple?pagePath=${pagePath}`, fetcher);
+export function useCampus(campusPath) {
+  const { data, error } = useSWR(`${serverUrl}/campusData?campusPath=${campusPath}`, fetcher);
   return {
-    pageData: data,
+    data,
     loading: !error && !data,
     error
   };
