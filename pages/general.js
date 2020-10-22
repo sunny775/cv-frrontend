@@ -13,7 +13,7 @@ import NewPost from '../src/components/NewPost';
 import About from '../src/components/groups/About';
 import Media from '../src/components/groups/Media';
 import CampusListDrawer from '../src/components/groups/CampusListDrawer';
-import { usePageSimple } from '../src/hooks/pageData';
+import { usePage } from '../src/hooks/pageData';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -88,7 +88,7 @@ function GeneralPage() {
   const classes = useStyles();
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   const [tab, setTab] = React.useState('main');
-  const { pageData, loading } = usePageSimple('general');
+  const { pageData, loading } = usePage('general');
 
   const handleDrawerToggle = () => {
     setDrawerOpen((state) => !state);
@@ -113,9 +113,9 @@ function GeneralPage() {
                 <Button fullWidth variant='contained' onClick={() => setTab('main')} size='large' endIcon={<Icon>message</Icon>}>Posts</Button>
             </Grid>
             <Grid item xs={6} md={3}>
-                <Link href='/announcement' >
+                <Link href='/general' >
                   <a>
-                    <Button fullWidth variant='contained' size='large' endIcon={<Icon>campaign</Icon>}>Announce</Button>
+                    <Button fullWidth variant='contained' size='large' endIcon={<Icon>people</Icon>}>General</Button>
                   </a>
                 </Link>
             </Grid>
@@ -144,7 +144,7 @@ function GeneralPage() {
                 <div className={classes.asideContent}>
                     {pageData && (
                       <About >
-                       {pageData.description}
+                       {pageData.page.description}
                       </About>
                     )}
                     {loading && (
@@ -157,8 +157,8 @@ function GeneralPage() {
         </div>
 
         {tab === 'about' && pageData && (
-          <About name={pageData.name}>
-            {pageData.description}
+          <About name={pageData.page.name}>
+            {pageData.page.description}
           </About>
         )}
         </Paper>
