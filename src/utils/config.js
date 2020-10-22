@@ -6,5 +6,5 @@ export const serverUrl =
 
 export const wsUrl =
   process.env.NODE_ENV === "production"
-    ? "wss://campusverve.herokuapp.com/"
+    ? "wss://campusverve.herokuapp.com"
     : "ws://localhost:4000";
