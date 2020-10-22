@@ -13,7 +13,7 @@ import NewPost from '../src/components/NewPost';
 import About from '../src/components/groups/About';
 import Media from '../src/components/groups/Media';
 import CampusListDrawer from '../src/components/groups/CampusListDrawer';
-import { usePageSimple } from '../src/hooks/pageData';
+import { usePage } from '../src/hooks/pageData';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -88,7 +88,7 @@ function AnnouncementPage() {
   const classes = useStyles();
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   const [tab, setTab] = React.useState('main');
-  const { pageData, loading } = usePageSimple('announcements');
+  const { pageData, loading } = usePage('announcements');
   const handleDrawerToggle = () => {
     setDrawerOpen((state) => !state);
   };
@@ -143,7 +143,7 @@ function AnnouncementPage() {
                 <div className={classes.asideContent}>
                     {pageData && (
                       <About >
-                       {pageData.description}
+                       {pageData.page.description}
                       </About>
                     )}
                     {loading && (
@@ -156,8 +156,8 @@ function AnnouncementPage() {
         </div>
 
         {tab === 'about' && pageData && (
-          <About name={pageData.name}>
-            {pageData.description}
+          <About name={pageData.page.name}>
+            {pageData.page.description}
           </About>
         )}
         </Paper>
