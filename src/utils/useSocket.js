@@ -33,6 +33,7 @@ function useSocket() {
           });
 
           socket.on(USER_CONNECTED, (user) => {
+            console.log('connected socket:', user)
             setOnlineUsers((state) => {
               const newList = { ...state };
               newList[user.name] = user;
