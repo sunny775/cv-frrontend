@@ -49,11 +49,9 @@ function useSocket() {
           });
         });
       })
-      .catch(() => {
-        setUser((user) => {
-          const newUser = { data: user.data, loading: false };
-          return newUser;
-        });
+      .catch((error) => {
+        console.log(error.response);
+        setUser({ data: null, loading: false });
         console.log("You are offline");
       });
   }, []);
