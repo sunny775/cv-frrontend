@@ -16,9 +16,9 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { useSetRecoilState } from "recoil";
 import axios from "axios";
-import { serverUrl } from '../../utils/config';
+import { serverUrl } from '../../../utils/config';
 import Copyright from "./Copyright";
-import { userState } from "../../recoil/atoms/users";
+import { userState } from "../../../recoil/atoms/users";
 
 const schema = yup.object({
   username: yup.string().required("Username is required"),

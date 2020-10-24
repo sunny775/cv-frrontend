@@ -3,16 +3,11 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import Fab from "@material-ui/core/Fab";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
-import Badge from "@material-ui/core/Badge";
-import AddIcon from "@material-ui/icons/Add";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
-import SearchBar from "../../SearchIcon";
+import SearchBar from "../../../SearchIcon";
 import Avatar from "./AvatarSmall";
 
 const useStyles = makeStyles((theme) => ({

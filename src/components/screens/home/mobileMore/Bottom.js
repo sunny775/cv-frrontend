@@ -1,14 +1,13 @@
 import React from "react";
 import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 import Button from "@material-ui/core/Button";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
-import SearchBar from "../../SearchIcon";
-import Avatar from "../../profile/forUser/AvatarSmall";
+import SearchBar from "../../../SearchIcon";
+import Avatar from "../forUser/AvatarSmall";
 
 const useStyles = makeStyles((theme) => ({
   sideBar: {

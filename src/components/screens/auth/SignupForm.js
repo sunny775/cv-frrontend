@@ -19,8 +19,8 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import axios from "axios";
 import Copyright from "./Copyright";
-import schools from "../../utils/higherInstitutions";
-import { serverUrl } from '../../utils/config';
+import schools from "../../../utils/higherInstitutions";
+import { serverUrl } from '../../../utils/config';
 
 const schema = yup.object({
   firstname: yup.string().required("Firstname is required"),

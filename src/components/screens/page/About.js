@@ -1,6 +1,7 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles((theme) => ({
@@ -29,3 +30,7 @@ export default function About({ children, name }) {
        </Paper>
   );
 }
+About.propTypes = {
+  children: PropTypes.any,
+  name: PropTypes.string
+};

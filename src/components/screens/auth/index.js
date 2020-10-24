@@ -11,10 +11,10 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
-import initFirebase from "../../utils/initFirebase";
+import initFirebase from "../../../utils/initFirebase";
 import SigninForm from "./SigninForm";
 import SignupForm from "./SignupForm";
-import { serverUrl } from '../../utils/config';
+import { serverUrl } from '../../../utils/config';
 
 initFirebase();
 

@@ -11,7 +11,7 @@ import Badge from "@material-ui/core/Badge";
 import AddIcon from "@material-ui/icons/Add";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
-import Avatar from "../../profile/forUser/AvatarLarge";
+import Avatar from "../forUser/AvatarLarge";
 
 const useStyles = makeStyles((theme) => ({
   sideBar: {

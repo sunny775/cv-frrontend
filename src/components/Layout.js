@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { makeStyles } from "@material-ui/core/styles";
 import Twemoji from 'react-twemoji';
-import Login from "./auth";
 import LinearBuffer from "./LinearBuffer";
 import { userState } from "../recoil/atoms/users";
 import ChatBox from './chat';
 import NavBar from './NavBar';
 import useSocket from '../utils/useSocket';
-import MobileMoreDrawer from './drawers/mobileMore';
+import MobileMoreDrawer from './screens/home/mobileMore';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Layout = ({ children }) => {
   const classes = useStyles();
-  const { data, loading } = useRecoilValue(userState);
+  const { loading } = useRecoilValue(userState);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { socket } = useSocket();
 
@@ -35,6 +34,6 @@ const Layout = ({ children }) => {
   );
 
   // return <div>{children}</div>;
-  return loading ? <LinearBuffer /> : data ? <L /> : <Login />;
+  return loading ? <LinearBuffer /> : <L />;
 };
 export default Layout;

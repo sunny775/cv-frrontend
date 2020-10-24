@@ -16,7 +16,7 @@ export function useCampusList() {
 export function usePage(pagePath) {
   const { error, data } = useSWR(`${serverUrl}/pageData?pagePath=${pagePath}`, fetcher);
   return {
-    pageData: data,
+    data,
     loading: !error && !data,
     error
   };

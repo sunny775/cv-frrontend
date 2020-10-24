@@ -9,10 +9,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Icon from '@material-ui/core/Icon';
 import PropTypes from 'prop-types';
-import Link from 'next/link';
-import {useRouter} from 'next/router';
+import { useRouter } from 'next/router';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { useCampusList } from '../../hooks/pageData';
+import { useCampusList } from '../../../hooks/pageData';
 
 const drawerWidth = 240;
 

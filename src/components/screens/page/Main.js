@@ -8,10 +8,11 @@ import Button from "@material-ui/core/Button";
 import Fab from '@material-ui/core/Fab';
 import MenuIcon from '@material-ui/icons/Menu';
 import Link from 'next/link';
+import PropTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import NewPost from '../../NewPost';
-import About from '../../groups/About';
-import Media from '../../groups/Media';
+import About from './About';
+import Media from './Media';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -82,7 +83,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Main({ handleDrawerToggle, data, loading }) {
+function Main({ children, handleDrawerToggle, data, loading }) {
   const classes = useStyles();
   const [tab, setTab] = React.useState('main');
   return (
@@ -90,7 +91,7 @@ function Main({ handleDrawerToggle, data, loading }) {
         <Paper className={classes.mainArea} elevation={0}>
         <div>
             <div className={classes.coverPhoto}>
-                <div className={classes.groupName}>{data && data.campus.name}</div>
+                <div className={classes.groupName}>{data && data.name}</div>
                 <Hidden mdUp implementation="css">
                 <Fab color="secondary" aria-label="Campus Groups" className={classes.campusesBtn} onClick={handleDrawerToggle}>
                    <MenuIcon />
@@ -102,11 +103,7 @@ function Main({ handleDrawerToggle, data, loading }) {
                 <Button fullWidth variant='contained' onClick={() => setTab('main')} size='large' endIcon={<Icon>message</Icon>}>Posts</Button>
             </Grid>
             <Grid item xs={6} md={3}>
-                <Link href='/announcement' >
-                  <a>
-                    <Button fullWidth variant='contained' size='large' endIcon={<Icon>campaign</Icon>}>Announce</Button>
-                  </a>
-                </Link>
+                {children}
             </Grid>
             <Grid item xs={6} md={3}>
                 <Button fullWidth variant='contained' onClick={() => setTab('media')} size='large' endIcon={<Icon>collections</Icon>}>Media</Button>
@@ -131,11 +128,11 @@ function Main({ handleDrawerToggle, data, loading }) {
 
             <Grid item xs={false} md={4} className={classes.aside}>
                 <div className={classes.asideContent}>
-                    {data && (
-                      <About name={data.campus.name}>
-                       {data.campus.description}
-                      </About>
-                    )}
+                      {data && (
+                        <About name={data.name}>
+                           {data.description}
+                        </About>
+                      )}
                     {loading && (
                       <Paper className={classes.loading}><CircularProgress /></Paper>
                     )}
@@ -146,8 +143,8 @@ function Main({ handleDrawerToggle, data, loading }) {
         </div>
 
         {tab === 'about' && data && (
-          <About name={data.campus.name}>
-            {data.campus.description}
+          <About name={data.name}>
+            {data.description}
           </About>
         )}
         </Paper>
@@ -155,5 +152,11 @@ function Main({ handleDrawerToggle, data, loading }) {
       </main>
   );
 }
+Main.propTypes = {
+  children: PropTypes.any,
+  handleDrawerToggle: PropTypes.func,
+  data: PropTypes.object,
+  loading: PropTypes.bool
+};
 
 export default Main;
