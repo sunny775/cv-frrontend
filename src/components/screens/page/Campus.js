@@ -32,7 +32,7 @@ function Campus() {
   return (
     <div className={classes.root}>
         <CampusListDrawer drawerOpen={drawerOpen} handleDrawerToggle={handleDrawerToggle} />
-        <Main handleDrawerToggle={handleDrawerToggle} data={data} loading={loading} >
+        <Main handleDrawerToggle={handleDrawerToggle} data={user.Campus} >
             <Link href='/general' >
                   <a>
                     <Button fullWidth variant='contained' size='large' endIcon={<Icon>people</Icon>}>General</Button>

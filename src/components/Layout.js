@@ -6,6 +6,7 @@ import LinearBuffer from "./LinearBuffer";
 import { userState } from "../recoil/atoms/users";
 import ChatBox from './chat';
 import NavBar from './NavBar';
+import Login from "./screens/auth";
 import useSocket from '../utils/useSocket';
 import MobileMoreDrawer from './screens/home/mobileMore';
 
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Layout = ({ children }) => {
   const classes = useStyles();
-  const { loading } = useRecoilValue(userState);
+  const { data, loading } = useRecoilValue(userState);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { socket } = useSocket();
 
@@ -34,6 +35,6 @@ const Layout = ({ children }) => {
   );
 
   // return <div>{children}</div>;
-  return loading ? <LinearBuffer /> : <L />;
+  return loading ? <LinearBuffer /> : data ? <L /> : <Login />;
 };
 export default Layout;
