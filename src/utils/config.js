@@ -9,5 +9,5 @@ export const wsUrl =
     ? "wss://campusverve.herokuapp.com"
     : "ws://localhost:4000";
  */
-export const serverUrl = "http://cvapp-env.eba-7papejsc.eu-central-1.elasticbeanstalk.com";
-export const wsUrl = "ws://cvapp-env.eba-7papejsc.eu-central-1.elasticbeanstalk.com"
+export const serverUrl = "https://campusverve.herokuapp.com"
+export const wsUrl = "wss://campusverve.herokuapp.com"
